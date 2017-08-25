@@ -32,12 +32,21 @@ class Table extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+  }
+
+  removeItem(itemIndex) {
+    let newArray = this.state.revenue_items;
+    newArray.splice(itemIndex, 1)  ;
+    this.setState({
+      revenue_items: newArray
+    })
   }
 
   renderRevenueItems(items) {
     // console.log('revenueItems', List);
-    return items.map((item) => {
-     return <RevenueItem key={item.id} item={item} />
+    return items.map((item, index) => {
+     return <RevenueItem key={index} item={item} index={index} removeItem={this.removeItem} revenue_items={this.state.revenue_items} />
     });
   }
 

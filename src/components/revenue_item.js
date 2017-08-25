@@ -1,12 +1,30 @@
 import React from 'react';
 
 
-const RevenueItem = ({item}) => (
-    <tr>
-      <td>{item.description}</td>
-      <td>{item.revenue_one_time}</td>
-      <td>{item.revenue_monthly}</td>
-    </tr>
-);
+
+class RevenueItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.removeItem = this.removeItem.bind(this);
+  }
+
+  removeItem(){
+    console.log('remove item called in item', 'props ', this.props);
+    let index = parseInt(this.props.index);
+     this.props.removeItem(index);
+  }
+
+  render() {
+    return (
+      <tr>
+        <td>{this.props.item.description}</td>
+        <td>{this.props.item.revenue_one_time}</td>
+        <td>{this.props.item.revenue_monthly}</td>
+        <td><button onClick={this.removeItem}>Delete</button></td>
+      </tr>
+    )
+  }
+}
 
 export default RevenueItem;
