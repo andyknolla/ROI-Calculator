@@ -1,23 +1,40 @@
 import React, { Component } from 'react';
 import Table from './components/revenue_table';
-
+import Calculations from './components/calculations'
 import './App.css';
 
-const List = [
+const RevenueList = [
   {
     description: 'item one',
-    revenue_one_time: '100',
-    revenue_monthly: '50'
+    one_time: '100',
+    monthly: '50'
   },
   {
     description: 'item two',
-    revenue_one_time: '10',
-    revenue_monthly: '80'
+    one_time: '10',
+    monthly: '80'
   },
   {
     description: 'item three',
-    revenue_one_time: '300',
-    revenue_monthly: '25'
+    one_time: '300',
+    monthly: '25'
+  }
+]
+const ExpenseList = [
+  {
+    description: 'expense one',
+    one_time: '200',
+    monthly: '100'
+  },
+  {
+    description: 'expense two',
+    one_time: '600',
+    monthly: '700'
+  },
+  {
+    description: 'expense three',
+    one_time: '140',
+    monthly: '730'
   }
 ]
 
@@ -26,11 +43,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      revenue_items: List,
-      expense_items: [],
-      description: '',
+      revenue_items: RevenueList,
+      expense_items: ExpenseList,
+      revenue_description: '',
       revenue_one_time: '0',
-      revenue_monthly: '0'
+      revenue_monthly: '0',
+      expense_description: '',
+      expense_one_time: '0',
+      expense_monthly: '0'
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -78,10 +98,32 @@ class App extends Component {
         <div className="App-header">
           <h2>ROI Calculator</h2>
         </div>
-        <p className="App-intro"></p>
-        <Table items={this.state.revenue_items} removeItem={this.removeItem} handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} type="revenue" description={this.state.description} one_time={this.state.revenue_one_time} monthly={this.state.revenue_monthly} />
+        <p className="App-intro">         </p>
+        <div className='container'>
+          <Table
+            items={this.state.revenue_items}
+            removeItem={this.removeItem}
+            handleSubmit={this.handleSubmit}
+            handleInputChange={this.handleInputChange}
+            type="revenue"
+            inputDescription={this.state.revenue_description}
+            inputOne_time={this.state.revenue_one_time}
+            inputMonthly={this.state.revenue_monthly}
+          />
 
-        <Table items={this.state.expense_items} removeItem={this.removeItem} handleSubmit={this.handleSubmit} type="expense" />
+          <Table
+            items={this.state.expense_items}
+            removeItem={this.removeItem}
+            handleSubmit={this.handleSubmit}
+            handleInputChange={this.handleInputChange}
+            type="expense"
+            inputDescription={this.state.expense_description}
+            inputOne_time={this.state.expense_one_time}
+            inputMonthly={this.state.expense_monthly}
+          />
+
+          <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
+        </div>
       </div>
     );
   }

@@ -16,7 +16,7 @@ class Table extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <table>
           <tbody>
             <tr>
@@ -29,7 +29,7 @@ class Table extends React.Component {
         </table>
         <form onSubmit={this.props.handleSubmit} className="form-inline" >
             <div className="form-group">
-              <label for="description">
+              <label>
                 {/* description: */}
                 <input
                   className="form-control"
@@ -44,7 +44,7 @@ class Table extends React.Component {
                 {/* One-time: */}
                 <input
                   className="form-control"
-                  name="revenue_one_time"
+                  name="one_time"
                   type="text"
                   value={this.props.one_time}
                   onChange={this.props.handleInputChange} />
@@ -55,7 +55,7 @@ class Table extends React.Component {
                 {/* revenue_monthly: */}
                 <input
                   className="form-control"
-                  name="revenue_monthly"
+                  name="monthly"
                   type="text"
                   value={this.props.monthly}
                   onChange={this.props.handleInputChange} />
