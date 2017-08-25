@@ -16,7 +16,6 @@ class App extends Component {
         </div>
         <p className="App-intro"></p>
         <Table />
-        {/* <ItemInput items={List} /> */}
       </div>
     );
   }

@@ -21,7 +21,7 @@ class RevenueItem extends React.Component {
         <td>{this.props.item.description}</td>
         <td>{this.props.item.revenue_one_time}</td>
         <td>{this.props.item.revenue_monthly}</td>
-        <td><button onClick={this.removeItem}>Delete</button></td>
+        <td><button onClick={this.removeItem} className="btn btn-danger">Delete</button></td>
       </tr>
     )
   }

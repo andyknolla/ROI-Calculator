@@ -76,7 +76,7 @@ class Table extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <table>
           <tbody>
             <tr>
@@ -87,34 +87,41 @@ class Table extends React.Component {
             {this.renderRevenueItems(this.state.revenue_items)}
           </tbody>
         </table>
-        <form onSubmit={this.handleSubmit} >
-          <label>
-            description:
-            <input
-              name="description"
-              type="text"
-              value={this.state.description}
-              onChange={this.handleInputChange} />
-          </label>
-          <br />
-          <label>
-            One-time:
-            <input
-              name="revenue_one_time"
-              type="text"
-              value={this.state.revenue_one_time}
-              onChange={this.handleInputChange} />
-          </label>
-          <br />
-          <label>
-            revenue_monthly:
-            <input
-              name="revenue_monthly"
-              type="text"
-              value={this.state.revenue_monthly}
-              onChange={this.handleInputChange} />
-          </label>
-          <input type="submit" value="Submit" />
+        <form onSubmit={this.handleSubmit} className="form-inline" >
+            <div className="form-group">
+              <label for="description">
+                {/* description: */}
+                <input
+                  className="form-control"
+                  name="description"
+                  type="text"
+                  value={this.state.description}
+                  onChange={this.handleInputChange} />
+              </label>
+            </div>
+            <div className="form-group">
+              <label>
+                {/* One-time: */}
+                <input
+                  className="form-control"
+                  name="revenue_one_time"
+                  type="text"
+                  value={this.state.revenue_one_time}
+                  onChange={this.handleInputChange} />
+              </label>
+            </div>
+            <div className="form-group">
+              <label>
+                {/* revenue_monthly: */}
+                <input
+                  className="form-control"
+                  name="revenue_monthly"
+                  type="text"
+                  value={this.state.revenue_monthly}
+                  onChange={this.handleInputChange} />
+              </label>
+            </div>
+          <input type="submit" value="Submit" className="btn" />
         </form>
       </div>
     );
