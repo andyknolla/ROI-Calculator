@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from './components/revenue_table';
+import Table from './components/table';
 import Calculations from './components/calculations'
 import './App.css';
 
@@ -53,43 +53,64 @@ class App extends Component {
       expense_monthly: '0'
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.InputStateChange = this.InputStateChange.bind(this);
+    this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
   }
 
-  removeItem(itemIndex) {
-    let newArray = this.state.revenue_items;
-    newArray.splice(itemIndex, 1)  ;
-    this.setState({
-      revenue_items: newArray
-    })
+  removeItem(itemIndex, type) {
+    if(type === 'revenue') {
+      let newArray = this.state.revenue_items;
+      newArray.splice(itemIndex, 1)  ;
+      this.setState({
+        revenue_items: newArray
+      })
+    } else {
+      let newArray = this.state.expense_items;
+      newArray.splice(itemIndex, 1)  ;
+      this.setState({
+        expense_items: newArray
+      })
+    }
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+  InputStateChange(type, value, name) {
+    let propertyName = `${type}_${name}`
     this.setState({
-      [name]: value
+      [propertyName]: value
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    let newArray = this.state.revenue_items;
-    let newItem = {
-      description: this.state.description,
-      revenue_one_time: this.state.revenue_one_time,
-      revenue_monthly: this.state.revenue_monthly
+  addItem(type) {
+    if(type === 'revenue') {
+      let newArray = this.state.revenue_items;
+      let newItem = {
+        description: this.state.revenue_description,
+        one_time: this.state.revenue_one_time,
+        monthly: this.state.revenue_monthly
+      }
+      newArray.push(newItem);
+      this.setState({
+        revenue_items: newArray,
+        revenute_description: '',
+        revenue_one_time: '0',
+        revenue_monthly: '0'
+      })
+    } else {
+      let newArray = this.state.expense_items;
+      let newItem = {
+        description: this.state.expense_description,
+        one_time: this.state.expense_one_time,
+        monthly: this.state.expense_monthly
+      }
+      newArray.push(newItem);
+      this.setState({
+        expense_items: newArray,
+        expense_description: '',
+        expense_one_time: '0',
+        expense_monthly: '0'
+      })
     }
-    newArray.push(newItem);
-    this.setState({
-      revenue_items: newArray,
-      description: '',
-      revenue_one_time: '0',
-      revenue_monthly: '0'
-    })
   }
 
   render() {
@@ -103,8 +124,8 @@ class App extends Component {
           <Table
             items={this.state.revenue_items}
             removeItem={this.removeItem}
-            handleSubmit={this.handleSubmit}
-            handleInputChange={this.handleInputChange}
+            addItem={this.addItem}
+            InputStateChange={this.InputStateChange}
             type="revenue"
             inputDescription={this.state.revenue_description}
             inputOne_time={this.state.revenue_one_time}
@@ -114,8 +135,8 @@ class App extends Component {
           <Table
             items={this.state.expense_items}
             removeItem={this.removeItem}
-            handleSubmit={this.handleSubmit}
-            handleInputChange={this.handleInputChange}
+            addItem={this.addItem}
+            InputStateChange={this.InputStateChange}
             type="expense"
             inputDescription={this.state.expense_description}
             inputOne_time={this.state.expense_one_time}

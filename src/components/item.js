@@ -10,9 +10,8 @@ class RevenueItem extends React.Component {
   }
 
   removeItem(){
-    console.log('remove item called in item', 'props ', this.props);
-    let index = parseInt(this.props.index);
-     this.props.removeItem(index);
+    let index = parseInt(this.props.index, 10);
+     this.props.removeItem(index, this.props.type);
   }
 
   render() {

@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 class Calculations extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   sumTotal(items, type) {
     return items.reduce( (sum, item) => {
-        return type ? sum + parseInt(item[type]) : sum + parseInt(item.one_time) + parseInt(item.monthly);
+        return type ? sum + parseInt(item[type], 10) : sum + parseInt(item.one_time, 10) + parseInt(item.monthly, 10);
     }, 0)
   }
 
