@@ -7,34 +7,34 @@ const RevenueList = [
   {
     description: 'item one',
     one_time: '100',
-    monthly: '50'
+    monthly: '500'
   },
   {
     description: 'item two',
-    one_time: '10',
-    monthly: '80'
+    one_time: '100',
+    monthly: '800'
   },
   {
     description: 'item three',
-    one_time: '300',
-    monthly: '25'
+    one_time: '150',
+    monthly: '250'
   }
 ]
 const ExpenseList = [
   {
     description: 'expense one',
     one_time: '200',
-    monthly: '100'
+    monthly: '50'
   },
   {
     description: 'expense two',
     one_time: '600',
-    monthly: '700'
+    monthly: '100'
   },
   {
     description: 'expense three',
-    one_time: '140',
-    monthly: '730'
+    one_time: '150',
+    monthly: '150'
   }
 ]
 
@@ -56,6 +56,10 @@ class App extends Component {
     this.InputStateChange = this.InputStateChange.bind(this);
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('revenues should be 350, 1550, and 18950', 'expenses should be 950, 300, and 4550', 'Contribution Profit should be 1250 for monthly, and 14400 for total', 'Contribution Margin should be 0.75989...', 'ROI should be 0.48');
   }
 
   removeItem(itemIndex, type) {
@@ -114,7 +118,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('revenues should be 900 170 and 2940', 'expenses should be 540, 40, and 1020', 'Contribution Profit should be 130 for monthly, and 1920 for total', 'Contribution Margin should be 0.65306...', 'ROI should be -2.769...');
+
     return (
       <div className="App">
         <div className="App-header">

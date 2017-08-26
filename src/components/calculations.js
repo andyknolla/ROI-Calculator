@@ -4,8 +4,33 @@ class Calculations extends React.Component {
 
   sumTotal(items, type) {
     return items.reduce( (sum, item) => {
-        return type ? sum + parseInt(item[type], 10) : sum + parseInt(item.one_time, 10) + parseInt(item.monthly, 10);
+        return type ? sum + parseInt(item[type], 10) : sum + parseInt(item.one_time, 10) + ( parseInt(item.monthly, 10) * 12 );
     }, 0)
+  }
+
+  contributionProfit(type) {
+    if(type) {
+      return (
+        this.sumTotal(this.props.revenue, 'monthly') - this.sumTotal(this.props.expense, 'monthly')
+      )
+    } else {
+      return (
+        this.sumTotal(this.props.revenue) - this.sumTotal(this.props.expense)
+      )
+    }
+  }
+
+  contributionMargin() {
+      return (
+        ( this.sumTotal(this.props.revenue) - this.sumTotal(this.props.expense) ) / this.sumTotal(this.props.revenue)
+      )
+  }
+
+  roi() {
+    return (
+      ( this.sumTotal(this.props.expense, 'one_time') -
+      this.sumTotal(this.props.revenue, 'one_time') ) / this.contributionProfit('monthly')
+      )
   }
 
   render() {
