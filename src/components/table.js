@@ -5,6 +5,9 @@ import Form from './form';
 
 class Table extends React.Component {
 
+  componentWillUnmount() {
+    console.log('unmount');
+  }
   renderItems(items) {
     return items.map((item, index) => {
      return <Item key={index} item={item} type={this.props.type} index={index} removeItem={this.props.removeItem} />

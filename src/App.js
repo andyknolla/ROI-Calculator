@@ -57,6 +57,7 @@ class App extends Component {
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.saveData = this.saveData.bind(this);
+    this.clearData = this.clearData.bind(this);
   }
 
   componentWillMount() {
@@ -70,6 +71,8 @@ class App extends Component {
     if(savedRevenueData)  this.setState({ revenue_items: savedRevenueData });
     if(savedExpenseData)  this.setState({ expense_items: savedExpenseData });
   }
+
+
 
   removeItem(itemIndex, type) {
     if(type === 'revenue') {
@@ -131,6 +134,15 @@ class App extends Component {
     localStorage.setItem( "savedExpenseData", JSON.stringify( this.state.expense_items ) )
   }
 
+  clearData() {
+    localStorage.removeItem('savedExpenseData');
+    localStorage.removeItem('savedRevenueData');
+    this.setState({
+      revenue_items: [],
+      expense_items: []
+    })
+  }
+
   render() {
 
     return (
@@ -162,6 +174,7 @@ class App extends Component {
             inputMonthly={this.state.expense_monthly}
           />
           <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>
+          <button onClick={ this.clearData } className="btn btn-danger" >CLEAR ALL DATA</button>
 
           <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
         </div>
