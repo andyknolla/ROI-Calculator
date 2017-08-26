@@ -6,34 +6,34 @@ import './App.css';
 // const RevenueList = [
 //   {
 //     description: 'item one',
-//     one_time: '100',
+//     oneTime: '100',
 //     monthly: '500'
 //   },
 //   {
 //     description: 'item two',
-//     one_time: '100',
+//     oneTime: '100',
 //     monthly: '800'
 //   },
 //   {
 //     description: 'item three',
-//     one_time: '150',
+//     oneTime: '150',
 //     monthly: '250'
 //   }
 // ]
 // const ExpenseList = [
 //   {
 //     description: 'expense one',
-//     one_time: '200',
+//     oneTime: '200',
 //     monthly: '50'
 //   },
 //   {
 //     description: 'expense two',
-//     one_time: '600',
+//     oneTime: '600',
 //     monthly: '100'
 //   },
 //   {
 //     description: 'expense three',
-//     one_time: '150',
+//     oneTime: '150',
 //     monthly: '150'
 //   }
 // ]
@@ -46,10 +46,10 @@ class App extends Component {
       revenue_items: [],
       expense_items: [],
       revenue_description: '',
-      revenue_one_time: '0',
+      revenue_oneTime: '0',
       revenue_monthly: '0',
       expense_description: '',
-      expense_one_time: '0',
+      expense_oneTime: '0',
       expense_monthly: '0'
     };
 
@@ -102,28 +102,28 @@ class App extends Component {
       let newArray = this.state.revenue_items;
       let newItem = {
         description: this.state.revenue_description,
-        one_time: this.state.revenue_one_time,
+        oneTime: this.state.revenue_oneTime,
         monthly: this.state.revenue_monthly
       }
       newArray.push(newItem);
       this.setState({
         revenue_items: newArray,
         revenue_description: '',
-        revenue_one_time: '0',
+        revenue_oneTime: '0',
         revenue_monthly: '0'
       })
     } else {
       let newArray = this.state.expense_items;
       let newItem = {
         description: this.state.expense_description,
-        one_time: this.state.expense_one_time,
+        oneTime: this.state.expense_oneTime,
         monthly: this.state.expense_monthly
       }
       newArray.push(newItem);
       this.setState({
         expense_items: newArray,
         expense_description: '',
-        expense_one_time: '0',
+        expense_oneTime: '0',
         expense_monthly: '0'
       })
     }
@@ -159,7 +159,7 @@ class App extends Component {
             InputStateChange={this.InputStateChange}
             type="revenue"
             inputDescription={this.state.revenue_description}
-            inputOne_time={this.state.revenue_one_time}
+            inputOneTime={this.state.revenue_oneTime}
             inputMonthly={this.state.revenue_monthly}
           />
 
@@ -170,7 +170,7 @@ class App extends Component {
             InputStateChange={this.InputStateChange}
             type="expense"
             inputDescription={this.state.expense_description}
-            inputOne_time={this.state.expense_one_time}
+            inputOneTime={this.state.expense_oneTime}
             inputMonthly={this.state.expense_monthly}
           />
           <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>

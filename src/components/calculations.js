@@ -4,7 +4,7 @@ class Calculations extends React.Component {
 
   sumTotal(items, type) {
     return items.reduce( (sum, item) => {
-        return type ? sum + parseInt(item[type], 10) : sum + parseInt(item.one_time, 10) + ( parseInt(item.monthly, 10) * 12 );
+        return type ? sum + parseInt(item[type], 10) : sum + parseInt(item.oneTime, 10) + ( parseInt(item.monthly, 10) * 12 );
     }, 0)
   }
 
@@ -28,8 +28,8 @@ class Calculations extends React.Component {
 
   roi() {
     return (
-      ( this.sumTotal(this.props.expense, 'one_time') -
-      this.sumTotal(this.props.revenue, 'one_time') ) / this.contributionProfit('monthly')
+      ( this.sumTotal(this.props.expense, 'oneTime') -
+      this.sumTotal(this.props.revenue, 'oneTime') ) / this.contributionProfit('monthly')
       )
   }
 
@@ -45,13 +45,13 @@ class Calculations extends React.Component {
           </tr>
           <tr>
             <td>Revenue</td>
-            <td>{this.sumTotal(this.props.revenue, 'one_time')}</td>
+            <td>{this.sumTotal(this.props.revenue, 'oneTime')}</td>
             <td>{this.sumTotal(this.props.revenue, 'monthly')}</td>
             <td>{this.sumTotal(this.props.revenue)}</td>
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>{ this.sumTotal(this.props.expense, 'one_time') }</td>
+            <td>{ this.sumTotal(this.props.expense, 'oneTime') }</td>
             <td>{ this.sumTotal(this.props.expense, 'monthly') }</td>
             <td>{ this.sumTotal(this.props.expense) }</td>
           </tr>

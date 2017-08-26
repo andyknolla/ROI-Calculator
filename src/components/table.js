@@ -32,7 +32,7 @@ class Table extends React.Component {
           type={this.props.type}
           InputStateChange={this.props.InputStateChange}
           inputDescription={this.props.inputDescription}
-          inputOne_time={this.props.inputOne_time}
+          inputOneTime={this.props.inputOneTime}
           inputMonthly={this.props.inputMonthly}
         />
       </div>
