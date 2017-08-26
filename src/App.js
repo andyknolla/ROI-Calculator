@@ -67,10 +67,8 @@ class App extends Component {
     let savedExpenseData = JSON.parse(
       localStorage.getItem( "savedExpenseData" )
     );
-    this.setState({
-      revenue_items: savedRevenueData,
-      expense_items: savedExpenseData
-    })
+    if(savedRevenueData)  this.setState({ revenue_items: savedRevenueData });
+    if(savedExpenseData)  this.setState({ expense_items: savedExpenseData });
   }
 
   removeItem(itemIndex, type) {
