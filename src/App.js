@@ -3,48 +3,48 @@ import Table from './components/table';
 import Calculations from './components/calculations'
 import './App.css';
 
-const RevenueList = [
-  {
-    description: 'item one',
-    one_time: '100',
-    monthly: '500'
-  },
-  {
-    description: 'item two',
-    one_time: '100',
-    monthly: '800'
-  },
-  {
-    description: 'item three',
-    one_time: '150',
-    monthly: '250'
-  }
-]
-const ExpenseList = [
-  {
-    description: 'expense one',
-    one_time: '200',
-    monthly: '50'
-  },
-  {
-    description: 'expense two',
-    one_time: '600',
-    monthly: '100'
-  },
-  {
-    description: 'expense three',
-    one_time: '150',
-    monthly: '150'
-  }
-]
+// const RevenueList = [
+//   {
+//     description: 'item one',
+//     one_time: '100',
+//     monthly: '500'
+//   },
+//   {
+//     description: 'item two',
+//     one_time: '100',
+//     monthly: '800'
+//   },
+//   {
+//     description: 'item three',
+//     one_time: '150',
+//     monthly: '250'
+//   }
+// ]
+// const ExpenseList = [
+//   {
+//     description: 'expense one',
+//     one_time: '200',
+//     monthly: '50'
+//   },
+//   {
+//     description: 'expense two',
+//     one_time: '600',
+//     monthly: '100'
+//   },
+//   {
+//     description: 'expense three',
+//     one_time: '150',
+//     monthly: '150'
+//   }
+// ]
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      revenue_items: RevenueList,
-      expense_items: ExpenseList,
+      revenue_items: [],
+      expense_items: [],
       revenue_description: '',
       revenue_one_time: '0',
       revenue_monthly: '0',
@@ -56,10 +56,21 @@ class App extends Component {
     this.InputStateChange = this.InputStateChange.bind(this);
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.saveData = this.saveData.bind(this);
   }
 
-  componentDidMount() {
-    console.log('revenues should be 350, 1550, and 18950', 'expenses should be 950, 300, and 4550', 'Contribution Profit should be 1250 for monthly, and 14400 for total', 'Contribution Margin should be 0.75989...', 'ROI should be 0.48');
+  componentWillMount() {
+    // console.log('revenues should be 350, 1550, and 18950', 'expenses should be 950, 300, and 4550', 'Contribution Profit should be 1250 for monthly, and 14400 for total', 'Contribution Margin should be 0.75989...', 'ROI should be 0.48');
+    let savedRevenueData = JSON.parse(
+      localStorage.getItem( "savedRevenueData" )
+    );
+    let savedExpenseData = JSON.parse(
+      localStorage.getItem( "savedExpenseData" )
+    );
+    this.setState({
+      revenue_items: savedRevenueData,
+      expense_items: savedExpenseData
+    })
   }
 
   removeItem(itemIndex, type) {
@@ -96,7 +107,7 @@ class App extends Component {
       newArray.push(newItem);
       this.setState({
         revenue_items: newArray,
-        revenute_description: '',
+        revenue_description: '',
         revenue_one_time: '0',
         revenue_monthly: '0'
       })
@@ -115,6 +126,11 @@ class App extends Component {
         expense_monthly: '0'
       })
     }
+  }
+
+  saveData() {
+    localStorage.setItem( "savedRevenueData", JSON.stringify( this.state.revenue_items ) )
+    localStorage.setItem( "savedExpenseData", JSON.stringify( this.state.expense_items ) )
   }
 
   render() {
@@ -147,6 +163,7 @@ class App extends Component {
             inputOne_time={this.state.expense_one_time}
             inputMonthly={this.state.expense_monthly}
           />
+          <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>
 
           <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
         </div>
