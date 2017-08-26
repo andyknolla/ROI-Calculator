@@ -26,9 +26,26 @@ class Calculations extends React.Component {
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>{this.sumTotal(this.props.expense, 'one_time')}</td>
-            <td>{this.sumTotal(this.props.expense, 'monthly')}</td>
-            <td>{this.sumTotal(this.props.expense)}</td>
+            <td>{ this.sumTotal(this.props.expense, 'one_time') }</td>
+            <td>{ this.sumTotal(this.props.expense, 'monthly') }</td>
+            <td>{ this.sumTotal(this.props.expense) }</td>
+          </tr>
+          <br />
+          <tr>
+            <td>Contribution Profit</td>
+            <td></td>
+            <td>{ this.contributionProfit('monthly') }</td>
+            <td>{ this.contributionProfit() }</td>
+          </tr>
+          <tr>
+            <td>Contribution Margin</td>
+            <td>{ this.contributionMargin() }</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Capital ROI (Months)</td>
+            <td>{ this.roi() }</td>
+            <td></td>
           </tr>
         </tbody>
       </table>

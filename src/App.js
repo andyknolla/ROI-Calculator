@@ -114,6 +114,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('revenues should be 900 170 and 2940', 'expenses should be 540, 40, and 1020', 'Contribution Profit should be 130 for monthly, and 1920 for total', 'Contribution Margin should be 0.65306...', 'ROI should be -2.769...');
     return (
       <div className="App">
         <div className="App-header">
