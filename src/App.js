@@ -46,11 +46,11 @@ class App extends Component {
       revenue_items: [],
       expense_items: [],
       revenue_description: '',
-      revenue_oneTime: '0',
-      revenue_monthly: '0',
+      revenue_oneTime: 0,
+      revenue_monthly: 0,
       expense_description: '',
-      expense_oneTime: '0',
-      expense_monthly: '0'
+      expense_oneTime: 0,
+      expense_monthly: 0
     };
 
     this.InputStateChange = this.InputStateChange.bind(this);
@@ -109,8 +109,8 @@ class App extends Component {
       this.setState({
         revenue_items: newArray,
         revenue_description: '',
-        revenue_oneTime: '0',
-        revenue_monthly: '0'
+        revenue_oneTime: 0,
+        revenue_monthly: 0
       })
     } else {
       let newArray = this.state.expense_items;
@@ -123,8 +123,8 @@ class App extends Component {
       this.setState({
         expense_items: newArray,
         expense_description: '',
-        expense_oneTime: '0',
-        expense_monthly: '0'
+        expense_oneTime: 0,
+        expense_monthly: 0
       })
     }
   }

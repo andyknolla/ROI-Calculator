@@ -12,8 +12,11 @@ class Form extends React.Component {
     event.target.classList.add('active');
 
     const target = event.target;
-    const value = target.value;
+    let value;
+    if(target.name === 'description') value = target.value;
+    else value = Number(target.value);
     const name = target.name;
+    console.log('value ', typeof(value));
 
     let type = this.props.type;
     this.props.InputStateChange(type, value, name);
@@ -39,7 +42,6 @@ class Form extends React.Component {
     let isFormValid = true;
     // console.log('inputs ', inputs);
     inputs.forEach(input => {
-      console.log('input ', input);
       input.classList.add('active');
 
       const isInputValid = this.showInputError(input.name);
@@ -114,7 +116,7 @@ class Form extends React.Component {
                 className="form-control"
                 name="oneTime"
                 ref="oneTime"
-                type="text"
+                type="number"
                 // pattern=""
                 value={this.props.inputOneTime}
                 onChange={this.handleInputChange}
@@ -130,7 +132,7 @@ class Form extends React.Component {
                 className="form-control"
                 name="monthly"
                 ref="monthly"
-                type="text"
+                type="number"
                 // pattern=""
                 value={this.props.inputMonthly}
                 onChange={this.handleInputChange}

@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import Numeral from 'numeral';
 
 class RevenueItem extends React.Component {
   constructor(props) {
@@ -17,9 +16,9 @@ class RevenueItem extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.item.description}</td>
-        <td>{this.props.item.oneTime}</td>
-        <td>{this.props.item.monthly}</td>
+        <td>{ this.props.item.description }</td>
+        <td>{ Numeral( this.props.item.oneTime ).format("$ 0.00") }</td>
+        <td>{ Numeral( this.props.item.monthly ).format("$ 0.00") }</td>
         <td><button onClick={this.removeItem} className="btn btn-danger">Delete</button></td>
       </tr>
     )
