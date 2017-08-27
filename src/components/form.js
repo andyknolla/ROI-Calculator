@@ -6,6 +6,7 @@ class Form extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
   }
 
   handleInputChange(event) {
@@ -35,6 +36,11 @@ class Form extends React.Component {
     }
   }
 
+  cancelEdit() {
+    console.log('cancel edit');
+
+  }
+
   showFormErrors() {
     const inputs = document.querySelectorAll('input');
     let isFormValid = true;
@@ -46,6 +52,8 @@ class Form extends React.Component {
       if (!isInputValid) {
         isFormValid = false;
       }
+      input.classList.remove('active');
+
     });
 
     return isFormValid;
@@ -70,56 +78,60 @@ class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="form-inline" >
-          <div className="form-group">
-            <label>
-              {/* description: */}
-              <input
-                className="form-control"
-                name="description"
-                ref="description"
-                type="text"
-                value={this.props.inputDescription}
-                onChange={this.handleInputChange}
-                required
-              />
-            </label>
-            <div className="error" id={`${this.props.type}descriptionError`} />
-          </div>
-          <div className="form-group">
-            <label>
-              {/* One-time: */}
-              <input
-                className="form-control"
-                name="oneTime"
-                ref="oneTime"
-                type="number"
-                // pattern=""
-                value={this.props.inputOneTime}
-                onChange={this.handleInputChange}
-                required
-               />
-            </label>
-            <div className="error" id={ `${this.props.type}oneTimeError` } />
-          </div>
-          <div className="form-group">
-            <label>
-              {/* revenue_monthly: */}
-              <input
-                className="form-control"
-                name="monthly"
-                ref="monthly"
-                type="number"
-                // pattern=""
-                value={this.props.inputMonthly}
-                onChange={this.handleInputChange}
-                required
-               />
-            </label>
-           <div className="error" id={ `${this.props.type}monthlyError` } />
-          </div>
-        <button className="btn btn-success submit" >Submit</button>
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit} className="form-inline" >
+            <div className="form-group">
+              <label>description: </label>
+                <input
+                  className="form-control"
+                  name="description"
+                  ref="description"
+                  type="text"
+                  value={this.props.inputDescription}
+                  onChange={this.handleInputChange}
+                  required
+                  maxLength="30"
+                />
+
+              <div className="error" id={`${this.props.type}descriptionError`} />
+            </div>
+            <div className="form-group">
+              <label>One-time: </label>
+                <input
+                  className="form-control"
+                  name="oneTime"
+                  ref="oneTime"
+                  type="number"
+                  // pattern=""
+                  value={this.props.inputOneTime}
+                  onChange={this.handleInputChange}
+                  required
+                  max="999999999"
+                 />
+
+              <div className="error" id={ `${this.props.type}oneTimeError` } />
+            </div>
+            <div className="form-group">
+              <label>revenue_monthly:</label>
+                <input
+                  className="form-control"
+                  name="monthly"
+                  ref="monthly"
+                  type="number"
+                  // pattern=""
+                  value={this.props.inputMonthly}
+                  onChange={this.handleInputChange}
+                  required
+                 />
+
+             <div className="error" id={ `${this.props.type}monthlyError` } />
+            </div>
+          <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
+
+          <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
+        </form>
+        <button id={`${this.props.type}Cancel`} className="btn" onClick={this.cancelEdit}>Cancel</button>
+      </div>
     )
   }
 }

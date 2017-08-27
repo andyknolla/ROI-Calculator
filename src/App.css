@@ -12,8 +12,6 @@
 
 table {
   width: 100%;
-  /*border: 1px solid black;
-  border-collapse: collapse;*/
 }
 
 input.active:valid {
@@ -34,6 +32,14 @@ input.active:invalid {
   margin-bottom: 10px;
 }
 
+.col-titles {
+  font-size: 1.6rem;
+}
+
+.highlight {
+  border: 1px solid orange;
+}
+
 .item-button {
   padding: 1px 10px;
   margin: 3px;
@@ -41,6 +47,7 @@ input.active:invalid {
 
 .calculations {
   margin-top: 20px;
+  max-width: 750px;
 }
 .calculations tr {
   border-bottom: 1px solid lightgray;
@@ -54,16 +61,38 @@ input.active:invalid {
   padding-top: 20px;
 }
 
-.buttons {
-  margin-top: 10px;
+.margin-roi {
+  margin-top: 20px;
 }
 
-.buttons .btn {
-  margin-right: 10px;
+.margin, .roi {
+  max-width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.margin-value {
+}
+
+.buttons {
+  margin-top: 15px;
+}
+.buttons > button {
+  margin-right: 15px;
+  margin-bottom: 10px;
 }
 
 .submit {
-  margin-left: 10px;
+  text-transform: uppercase;
+  color: white;
+  background-image: linear-gradient(to top, #73b43b 0%, #99dc60 100%);
+  background-repeat: repeat-x;
+  background-color: #73b43b;
+  border-color: #5f8a4b;
+}
+.submit:hover {
+  background-color: #73b43b;
+  background-position: 0 -15px;
 }
 
 .form-group {
@@ -72,4 +101,30 @@ input.active:invalid {
 
 label {
   margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  label {
+    display: none;
+  }
+}
+
+.form-control {
+  width: auto;
+}
+
+.input-group {
+  max-width: 750px;
+}
+
+.hide {
+  display: none;
+  transition: display 1s;
+}
+.show {
+  display: block;
+  transition: display 1s;
+}
+.alert {
+  margin-top: 20px;
 }
