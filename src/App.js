@@ -173,8 +173,10 @@ class App extends Component {
             inputOneTime={this.state.expense_oneTime}
             inputMonthly={this.state.expense_monthly}
           />
-          <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>
-          <button onClick={ this.clearData } className="btn btn-danger" >CLEAR ALL DATA</button>
+          <div className="buttons">
+            <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>
+            <button onClick={ this.clearData } className="btn btn-danger" >CLEAR ALL DATA</button>
+          </div>
 
           <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
         </div>

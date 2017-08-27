@@ -28,3 +28,48 @@ input.active:invalid {
   font-size: 12px;
   margin-top: 5px;
 }
+
+.dataTable {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.item-button {
+  padding: 1px 10px;
+  margin: 3px;
+}
+
+.calculations {
+  margin-top: 20px;
+}
+.calculations tr {
+  border-bottom: 1px solid lightgray;
+  padding: 5px;
+}
+.calculations td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#final-calculations > td {
+  padding-top: 20px;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons .btn {
+  margin-right: 10px;
+}
+
+.submit {
+  margin-left: 10px;
+}
+
+.form-group {
+  margin-right: 5px;
+}
+
+label {
+  margin-bottom: 0;
+}

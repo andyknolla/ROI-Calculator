@@ -1,6 +1,8 @@
 import React from 'react';
 import Numeral from 'numeral';
 
+const CurrencyFormat = '$ 0,000.00';
+
 class Calculations extends React.Component {
 
   sumTotal(items, type) {
@@ -23,7 +25,11 @@ class Calculations extends React.Component {
 
   contributionMargin() {
       return (
-        ( this.sumTotal(this.props.revenue) - this.sumTotal(this.props.expense) ) / this.sumTotal(this.props.revenue)
+        (
+          this.sumTotal(this.props.revenue) -
+          this.sumTotal(this.props.expense)
+        ) /
+        this.sumTotal(this.props.revenue)
       )
   }
 
@@ -35,15 +41,8 @@ class Calculations extends React.Component {
   }
 
   render() {
-    let test = Numeral(100).format('$.00');
-    // console.log(typeof(this.props.revenue));
-    // console.log(test, this.sumTotal(this.props.revenue, 'oneTime'));
-
-    let test2 = Numeral( this.sumTotal(this.props.revenue, 'oneTime') ).format('$ 0.00')
-    // console.log(typeof(test2));
-
     return (
-      <table>
+      <table className='calculations' >
         <tbody>
           <tr>
             <th></th>
@@ -51,31 +50,32 @@ class Calculations extends React.Component {
             <th>Monthly</th>
             <th>Total</th>
           </tr>
-          <tr>
+          <tr className="total-calculations" >
             <td>Revenue</td>
-            <td>{ Numeral( this.sumTotal(this.props.revenue, 'oneTime') ).format('$ 0.00') }</td>
-            <td>{ Numeral( this.sumTotal(this.props.revenue, 'monthly') ).format('$ 0.00') }</td>
-            <td>{ Numeral( this.sumTotal(this.props.revenue) ).format('$ 0.00') }</td>
+            <td>{ Numeral( this.sumTotal(this.props.revenue, 'oneTime') ).format(CurrencyFormat) }</td>
+            <td>{ Numeral( this.sumTotal(this.props.revenue, 'monthly') ).format(CurrencyFormat) }</td>
+            <td>{ Numeral( this.sumTotal(this.props.revenue) ).format(CurrencyFormat) }</td>
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>{ Numeral( this.sumTotal(this.props.expense, 'oneTime') ).format('$ 0.00') }</td>
-            <td>{ Numeral( this.sumTotal(this.props.expense, 'monthly') ).format('$ 0.00') }</td>
-            <td>{ Numeral( this.sumTotal(this.props.expense) ).format('$ 0.00') }</td>
+            <td>{ Numeral( this.sumTotal(this.props.expense, 'oneTime') ).format(CurrencyFormat) }</td>
+            <td>{ Numeral( this.sumTotal(this.props.expense, 'monthly') ).format(CurrencyFormat) }</td>
+            <td>{ Numeral( this.sumTotal(this.props.expense) ).format(CurrencyFormat) }</td>
           </tr>
-          <br />
-          <tr>
+          <tr id="final-calculations" >
             <td>Contribution Profit</td>
             <td></td>
-            <td>{ Numeral( this.contributionProfit('monthly') ).format('$ 0.00') }</td>
-            <td>{ Numeral( this.contributionProfit() ).format('$ 0.00') }</td>
+            <td>{ Numeral( this.contributionProfit('monthly') ).format(CurrencyFormat) }</td>
+            <td>{ Numeral( this.contributionProfit() ).format(CurrencyFormat) }</td>
           </tr>
           <tr>
+            <td></td>
             <td>Contribution Margin</td>
             <td>{ Numeral( this.contributionMargin() ).format('0%') }</td>
             <td></td>
           </tr>
           <tr>
+            <td></td>
             <td>Capital ROI (Months)</td>
             <td>{ Numeral(this.roi() ).format('0.0') }</td>
             <td></td>

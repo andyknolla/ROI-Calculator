@@ -17,7 +17,7 @@ class Table extends React.Component {
   render() {
     return (
       <div>
-        <table>
+        <table className="dataTable" >
           <tbody>
             <tr>
               <th>Item Description</th>
