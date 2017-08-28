@@ -17,17 +17,15 @@ class RevenueItem extends React.Component {
   editItem() {
     let index = parseInt(this.props.index, 10);
     this.props.editItem(index, this.props.type);
-    // add highlight class to specific className, built from type + index...ie ${type}${index}
 
-
-    let highlights = document.querySelector(".highlight");
-    console.log('hightlights ', highlights);
-    if(highlights) {
-      document.querySelector(".highlight").classList.remove("highlight");
+    let highlights = document.querySelectorAll(".highlight"); 
+      if(highlights.length > 0) {
+        highlights.forEach( (element) => {
+          if( element.classList.value.includes(this.props.type) ) {
+            element.classList.remove("highlight")
+          }
+        })
     }
-    console.log(document.querySelector(`.${this.props.type}${index}`));
-    console.log(`.${this.props.type}${index}`);
-
     document.querySelector(`.${this.props.type}${index}`).classList.add("highlight")
   }
 

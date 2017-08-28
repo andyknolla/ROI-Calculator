@@ -3,42 +3,6 @@ import Table from './components/table';
 import Calculations from './components/calculations'
 import './App.css';
 
-// const RevenueList = [
-//   {
-//     description: 'item one',
-//     oneTime: '100',
-//     monthly: '500'
-//   },
-//   {
-//     description: 'item two',
-//     oneTime: '100',
-//     monthly: '800'
-//   },
-//   {
-//     description: 'item three',
-//     oneTime: '150',
-//     monthly: '250'
-//   }
-// ]
-// const ExpenseList = [
-//   {
-//     description: 'expense one',
-//     oneTime: '200',
-//     monthly: '50'
-//   },
-//   {
-//     description: 'expense two',
-//     oneTime: '600',
-//     monthly: '100'
-//   },
-//   {
-//     description: 'expense three',
-//     oneTime: '150',
-//     monthly: '150'
-//   }
-// ]
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +28,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    // console.log('revenues should be 350, 1550, and 18950', 'expenses should be 950, 300, and 4550', 'Contribution Profit should be 1250 for monthly, and 14400 for total', 'Contribution Margin should be 0.75989...', 'ROI should be 0.48');
     let savedRevenueData = JSON.parse(
       localStorage.getItem( "savedRevenueData" )
     );
@@ -74,8 +37,6 @@ class App extends Component {
     if(savedRevenueData)  this.setState({ revenue_items: savedRevenueData });
     if(savedExpenseData)  this.setState({ expense_items: savedExpenseData });
   }
-
-
 
   removeItem(itemIndex, type) {
 
@@ -102,16 +63,11 @@ class App extends Component {
   }
 
   editItem(itemIndex, type) {
-    console.log(itemIndex);
     this.setState({ editIndex: itemIndex })
 
     if(type === 'revenue') {
-    //grab the revenue array
     let itemForEditting = this.state.revenue_items[itemIndex]
-    console.log(itemForEditting);
-    // access the individual item based on index (an object)
 
-    // set input state items equal to object property value
     this.setState({
       revenue_description: itemForEditting.description,
       revenue_oneTime: itemForEditting.oneTime,
@@ -120,10 +76,6 @@ class App extends Component {
     document.getElementById(`${type}Submit`).classList.add("hide");
     document.getElementById(`${type}Update`).classList.remove("hide");
     document.getElementById(`${type}Cancel`).classList.remove("hide");
-
-    // item being editted should be highlighted
-
-    //...cancel just clears the form and returns submit button
 
     } else {
       let itemForEditting = this.state.expense_items[itemIndex]
@@ -136,29 +88,29 @@ class App extends Component {
       document.getElementById(`${type}Update`).classList.remove("hide");
       document.getElementById(`${type}Cancel`).classList.remove("hide");
     }
-    console.log(this.state);
   }
 
   cancelEdit(type) {
-    // let propertyName = `${type}`
     this.setState({
       [type+"_description"]: "",
       [type+"_oneTime"]: 0,
       [type+"_monthly"]: 0,
     })
-      document.getElementById(`${type}Submit`).classList.remove("hide");
-      document.getElementById(`${type}Update`).classList.add("hide");
-      document.getElementById(`${type}Cancel`).classList.add("hide");
+    document.getElementById(`${type}Submit`).classList.remove("hide");
+    document.getElementById(`${type}Update`).classList.add("hide");
+    document.getElementById(`${type}Cancel`).classList.add("hide");
 
+    let highlights = document.querySelectorAll(".highlight");
+    if(highlights.length > 0) {
+      highlights.forEach( (element) => {
+        if( element.classList.value.includes(type) ) {
+          element.classList.remove("highlight")
+        }
+      })
+    }
   }
 
   addItem(type) {
-console.log('add item');
-    // if state "edit" item is true, then handle differently...
-
-    // splice instead of pushing ...or splice differently- either with the edit index or, if it's a new item, use the existing array's length to splice onto the end
-
-
     if(type === 'revenue') {
       let newArray = this.state.revenue_items;
       let newItem = {
@@ -202,14 +154,17 @@ console.log('add item');
     }
     document.getElementById(`${type}Submit`).classList.remove("hide");
     document.getElementById(`${type}Update`).classList.add("hide");
-    let highlights = document.querySelector(".highlight");
+    document.getElementById(`${type}Cancel`).classList.add("hide");
+
+    let highlights = document.querySelectorAll(".highlight");
     console.log('hightlights ', highlights);
-    if(highlights) {
-      document.querySelector(".highlight").classList.remove("highlight");
+    if(highlights.length > 0) {
+      highlights.forEach( (element) => {
+        if( element.classList.value.includes(type) ) {
+          element.classList.remove("highlight")
+        }
+      })
     }
-    // highlights.forEach( (element) => {
-    //   element.classList.remove("highlight");
-    // })
   }
 
   showAlert(type) {

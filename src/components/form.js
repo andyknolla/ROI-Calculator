@@ -92,7 +92,6 @@ class Form extends React.Component {
                   required
                   maxLength="30"
                 />
-
               <div className="error" id={`${this.props.type}descriptionError`} />
             </div>
             <div className="form-group">
@@ -102,13 +101,11 @@ class Form extends React.Component {
                   name="oneTime"
                   ref="oneTime"
                   type="number"
-                  // pattern=""
                   value={this.props.inputOneTime}
                   onChange={this.handleInputChange}
                   required
                   max="999999999"
                  />
-
               <div className="error" id={ `${this.props.type}oneTimeError` } />
             </div>
             <div className="form-group">
@@ -118,19 +115,15 @@ class Form extends React.Component {
                   name="monthly"
                   ref="monthly"
                   type="number"
-                  // pattern=""
                   value={this.props.inputMonthly}
                   onChange={this.handleInputChange}
                   required
                  />
-
              <div className="error" id={ `${this.props.type}monthlyError` } />
             </div>
           <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
-
           <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
           <button id={`${this.props.type}Cancel`} className="btn hide" onClick={this.cancelEdit}>Cancel</button>
-
         </form>
       </div>
     )
