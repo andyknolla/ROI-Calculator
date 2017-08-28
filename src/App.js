@@ -157,7 +157,6 @@ class App extends Component {
     document.getElementById(`${type}Cancel`).classList.add("hide");
 
     let highlights = document.querySelectorAll(".highlight");
-    console.log('hightlights ', highlights);
     if(highlights.length > 0) {
       highlights.forEach( (element) => {
         if( element.classList.value.includes(type) ) {
@@ -174,7 +173,7 @@ class App extends Component {
     setTimeout( () => {
       alert.remove("show")
       alert.add("hide")
-    }, 2000);
+    }, 4000);
   }
 
   saveData() {
@@ -185,13 +184,16 @@ class App extends Component {
   }
 
   clearData() {
-    localStorage.removeItem('savedExpenseData');
-    localStorage.removeItem('savedRevenueData');
-    this.setState({
-      revenue_items: [],
-      expense_items: []
-    })
-    this.showAlert("clearAlert")
+    let confirmation = window.confirm("Are you sure you want to permenantly delete all of your data?")
+    if(confirmation) {
+      localStorage.removeItem('savedExpenseData');
+      localStorage.removeItem('savedRevenueData');
+      this.setState({
+        revenue_items: [],
+        expense_items: []
+      })
+      this.showAlert("clearAlert")
+    }
   }
 
   render() {
@@ -230,9 +232,9 @@ class App extends Component {
           />
           <div className="buttons">
             <button onClick={ this.saveData } className="btn btn-primary" >SAVE</button>
-            <button onClick={ this.clearData } className="btn btn-danger" >CLEAR ALL DATA</button>
-            <div id="saveAlert" className="alert alert-success hide">Your data has been saved</div>
-            <div id="clearAlert" className="alert alert-warning hide">Your data has been permenantly cleared</div>
+            <button onClick={ this.clearData } className="btn btn-danger" >DELETE ALL DATA</button>
+            <div id="saveAlert" className="alert alert-success hide">Your data has been saved to your browser's localStorage.</div>
+            <div id="clearAlert" className="alert alert-warning hide">Your data has been permenantly deleted.</div>
           </div>
 
           <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
