@@ -14,11 +14,11 @@ class Calculations extends React.Component {
   contributionProfit(type) {
     if(type) {
       return (
-        this.sum(this.props.revenue, 'monthly') - this.sum(this.props.expense, 'monthly')
+        Numeral( this.sum(this.props.revenue, 'monthly') - this.sum(this.props.expense, 'monthly') ).format(CurrencyFormat)
       )
     } else {
       return (
-        this.sum(this.props.revenue) - this.sum(this.props.expense)
+        Numeral( this.sum(this.props.revenue) - this.sum(this.props.expense) ).format(CurrencyFormat)
       )
     }
   }
@@ -42,7 +42,6 @@ class Calculations extends React.Component {
   }
 
   total(type, frequency) {
-    console.log('type ', type, 'props.type ', this.props[type]);
     return Numeral( this.sum(this.props[type], frequency) ).format(CurrencyFormat)
   }
 
@@ -65,20 +64,18 @@ class Calculations extends React.Component {
             </tr>
             <tr>
               <td>Expenses</td>
-              <td>{ Numeral( this.sum(this.props.expense, 'oneTime') ).format(CurrencyFormat) }</td>
-              <td>{ Numeral( this.sum(this.props.expense, 'monthly') ).format(CurrencyFormat) }</td>
-              <td>{ Numeral( this.sum(this.props.expense) ).format(CurrencyFormat) }</td>
+              <td>{ this.total("expense", "oneTime") }</td>
+              <td>{ this.total("expense", "monthly") }</td>
+              <td>{ this.total("expense") }</td>
             </tr>
             <tr id="final-calculations" >
               <td>Contribution Profit</td>
               <td></td>
-              <td>{ Numeral( this.contributionProfit('monthly') ).format(CurrencyFormat) }</td>
-              <td>{ Numeral( this.contributionProfit() ).format(CurrencyFormat) }</td>
+              <td>{ this.contributionProfit('monthly') }</td>
+              <td>{ this.contributionProfit() }</td>
             </tr>
-
           </tbody>
         </table>
-
         <div className="margin-roi">
           <div className="margin">
             <span>Contribution Margin</span>
