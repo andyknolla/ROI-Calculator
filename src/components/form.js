@@ -12,22 +12,16 @@ class Form extends React.Component {
   handleInputChange(event) {
     event.target.classList.add('active');
 
-    const target = event.target;
-    let value;
-
-    if(target.name === 'description') {
-      value = target.value;
-    } else value = Number(target.value);
-
-    const name = target.name;
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
     let type = this.props.type;
-    this.props.InputStateChange(type, value, name);
 
+    this.props.InputStateChange(type, value, name);
     this.showInputError(event.target.name);
   }
 
   handleSubmit(event) {
-    console.log('submit in form.js');
     event.preventDefault();
     let type = this.props.type;
     if (!this.showFormErrors()) {
@@ -42,20 +36,17 @@ class Form extends React.Component {
   }
 
   showFormErrors() {
-    const inputs = document.querySelectorAll('input');
+    let inputs = document.querySelectorAll('input');
     let isFormValid = true;
     inputs.forEach(input => {
       input.classList.add('active');
-
-      const isInputValid = this.showInputError(input.name);
+      let isInputValid = this.showInputError(input.name);
 
       if (!isInputValid) {
         isFormValid = false;
       }
       input.classList.remove('active');
-
     });
-
     return isFormValid;
   }
 
@@ -65,18 +56,19 @@ class Form extends React.Component {
     if (!validity.valid) {
       if (validity.valueMissing) {
         error.textContent = `required field`;
+      } else if (validity.patternMismatch) {
+        error.textContent = `Wrong`;
       }
-
-      // add my validity rules *********
-
       return false;
     }
-
     error.textContent = '';
     return true;
   }
 
   render() {
+    const CurrencyPattern1 = "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?"
+    // const CurrencyPattern = "^\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$"
+
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="form-inline" >
@@ -100,11 +92,12 @@ class Form extends React.Component {
                   className="form-control"
                   name="oneTime"
                   ref="oneTime"
-                  type="number"
+                  type="text"
                   value={this.props.inputOneTime}
                   onChange={this.handleInputChange}
+                  maxLength="13"
+                  pattern={CurrencyPattern1}
                   required
-                  max="999999999"
                  />
               <div className="error" id={ `${this.props.type}oneTimeError` } />
             </div>
@@ -114,9 +107,11 @@ class Form extends React.Component {
                   className="form-control"
                   name="monthly"
                   ref="monthly"
-                  type="number"
+                  type="text"
                   value={this.props.inputMonthly}
                   onChange={this.handleInputChange}
+                  maxLength="13"
+                  pattern={CurrencyPattern1}
                   required
                  />
              <div className="error" id={ `${this.props.type}monthlyError` } />

@@ -10,11 +10,11 @@ class App extends Component {
       revenue_items: [],
       expense_items: [],
       revenue_description: '',
-      revenue_oneTime: 0,
-      revenue_monthly: 0,
+      revenue_oneTime: '',
+      revenue_monthly: '',
       expense_description: '',
-      expense_oneTime: 0,
-      expense_monthly: 0,
+      expense_oneTime: '',
+      expense_monthly: '',
       editIndex: false
     };
 
@@ -128,8 +128,8 @@ class App extends Component {
       this.setState({
         revenue_items: newArray,
         revenue_description: '',
-        revenue_oneTime: 0,
-        revenue_monthly: 0,
+        revenue_oneTime: '',
+        revenue_monthly: '',
         editIndex: false
       })
     } else {
@@ -148,8 +148,8 @@ class App extends Component {
         this.setState({
         expense_items: newArray,
         expense_description: '',
-        expense_oneTime: 0,
-        expense_monthly: 0
+        expense_oneTime: '',
+        expense_monthly: ''
       })
     }
     document.getElementById(`${type}Submit`).classList.remove("hide");
