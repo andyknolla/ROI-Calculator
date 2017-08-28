@@ -5,38 +5,46 @@ const CurrencyFormat = '$ 0,000.00';
 
 class Calculations extends React.Component {
 
-  sum(items, type) {
+  sum(items, frequency) {
     return items.reduce( (sum, item) => {
-        return type ? sum + parseFloat(item[type]): sum + parseFloat(item.oneTime) + ( parseFloat(item.monthly) * 12 );
+        return frequency ? sum + parseFloat(item[frequency]): sum + parseFloat(item.oneTime) + ( parseFloat(item.monthly) * 12 );
     }, 0)
-  }
-
-  contributionProfit(type) {
-      return (
-        Numeral( this.sum(this.props.revenue, type) - this.sum(this.props.expense, type) ).format(CurrencyFormat)
-      )
-  }
-
-  contributionMargin() {
-      return (
-        (
-          this.sum(this.props.revenue) -
-          this.sum(this.props.expense)
-        ) /
-        this.sum(this.props.revenue)
-      )
-  }
-
-  roi() {
-    return (
-      ( this.sum(this.props.expense, 'oneTime') -
-      this.sum(this.props.revenue, 'oneTime') ) /
-      this.contributionProfit('monthly')
-    )
   }
 
   total(type, frequency) {
     return Numeral( this.sum(this.props[type], frequency) ).format(CurrencyFormat)
+  }
+
+  contributionProfit(frequency) {
+      return (
+              this.sum(this.props.revenue, frequency) -
+              this.sum(this.props.expense, frequency)
+      )
+  }
+
+// TODO move Numeral formatting into these two methods
+// TODO clean up indentation
+
+  contributionMargin() {
+    return Numeral( ( this.sum(this.props.revenue) -
+                    this.sum(this.props.expense) ) /
+                    this.sum(this.props.revenue) ).format("0%")
+  }
+
+  roi() {
+    //********  test  *********** //
+    // let firstPart = ( this.sum(this.props.expense, 'oneTime') -
+    //   this.sum(this.props.revenue, 'oneTime') );
+    // let secondPart = this.contributionProfit('monthly');
+    //
+    // console.log('first part ', firstPart, 'secondPart ', secondPart);
+    // console.log( firstPart / secondPart );
+    // ******** end test *********** //
+
+    return Numeral( ( this.sum(this.props.expense, 'oneTime') -
+                    this.sum(this.props.revenue, 'oneTime') ) /
+                    this.contributionProfit('monthly') ).format("0.0")
+                    
   }
 
   render() {
@@ -65,19 +73,19 @@ class Calculations extends React.Component {
             <tr id="final-calculations" >
               <td>Contribution Profit</td>
               <td></td>
-              <td>{ this.contributionProfit('monthly') }</td>
-              <td>{ this.contributionProfit() }</td>
+              <td>{ Numeral( this.contributionProfit('monthly') ).format(CurrencyFormat) }</td>
+              <td>{ Numeral( this.contributionProfit() ).format(CurrencyFormat) }</td>
             </tr>
           </tbody>
         </table>
         <div className="margin-roi">
           <div className="margin">
             <span>Contribution Margin</span>
-            <span className="margin-value">{ Numeral( this.contributionMargin() ).format('0%') }</span>
+            <span className="margin-value">{ this.contributionMargin()}</span>
           </div>
           <div className="roi">
             <span>Capital ROI (Months)</span>
-            <span className="roi-value"> { Numeral(this.roi() ).format('0.0') }</span>
+            <span className="roi-value"> { this.roi() }</span>
           </div>
         </div>
       </div>

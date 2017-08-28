@@ -40,20 +40,11 @@ class App extends Component {
   }
 
   removeItem(itemIndex, type) {
-
-    if(type === 'revenue') {
-      let newArray = this.state.revenue_items;
-      newArray.splice(itemIndex, 1)  ;
-      this.setState({
-        revenue_items: newArray
-      })
-    } else {
-      let newArray = this.state.expense_items;
-      newArray.splice(itemIndex, 1)  ;
-      this.setState({
-        expense_items: newArray
-      })
-    }
+    let newArray = this.state[type + "_items"];
+    newArray.splice(itemIndex, 1)  ;
+    this.setState({
+      [type + "_items"]: newArray
+    })
   }
 
   InputStateChange(type, value, name) {
@@ -64,33 +55,14 @@ class App extends Component {
   }
 
   editItem(itemIndex, type) {
-    this.setState({ [type + "EditIndex"]: itemIndex })
-
-    console.log('state ', this.state);
-
-    if(type === 'revenue') {
-    let itemForEditting = this.state.revenue_items[itemIndex]
-
+    let itemForEditting = this.state[type + "_items"][itemIndex];
     this.setState({
-      revenue_description: itemForEditting.description,
-      revenue_oneTime: itemForEditting.oneTime,
-      revenue_monthly: itemForEditting.monthly
+      [type + "_description"]: itemForEditting.description,
+      [type + "_oneTime"]: itemForEditting.oneTime,
+      [type + "_monthly"]: itemForEditting.monthly,
+      [type + "EditIndex"]: itemIndex
     })
-    document.getElementById(`${type}Submit`).classList.add("hide");
-    document.getElementById(`${type}Update`).classList.remove("hide");
-    document.getElementById(`${type}Cancel`).classList.remove("hide");
-
-    } else {
-      let itemForEditting = this.state.expense_items[itemIndex]
-      this.setState({
-        expense_description: itemForEditting.description,
-        expense_oneTime: itemForEditting.oneTime,
-        expense_monthly: itemForEditting.monthly
-      })
-      document.getElementById(`${type}Submit`).classList.add("hide");
-      document.getElementById(`${type}Update`).classList.remove("hide");
-      document.getElementById(`${type}Cancel`).classList.remove("hide");
-    }
+    this.switchButtons(type, "edit");
   }
 
   cancelEdit(type) {
@@ -100,10 +72,34 @@ class App extends Component {
       [type + "_monthly"]: 0,
       [type + "EditIndex"]: false
     })
-    document.getElementById(`${type}Submit`).classList.remove("hide");
-    document.getElementById(`${type}Update`).classList.add("hide");
-    document.getElementById(`${type}Cancel`).classList.add("hide");
+    this.switchButtons(type, "normal");
+    this.clearEditHighlights(type);
+  }
 
+  clearInputState(type) {
+    this.setState({
+      [type + "_description"]: '',
+      [type + "_oneTime"]: '',
+      [type + "_monthly"]: ''
+    })
+  }
+
+  switchButtons(type, mode) {
+    let submit = document.getElementById(`${type}Submit`).classList;
+    let update = document.getElementById(`${type}Update`).classList;
+    let cancel = document.getElementById(`${type}Cancel`).classList;
+    if(mode === "edit") {
+      submit.add("hide");
+      update.remove("hide");
+      cancel.remove("hide");
+    } else {
+      submit.remove("hide");
+      update.add("hide");
+      cancel.add("hide");
+    }
+  }
+
+  clearEditHighlights(type) {
     let highlights = document.querySelectorAll(".highlight");
     if(highlights.length > 0) {
       highlights.forEach( (element) => {
@@ -115,72 +111,29 @@ class App extends Component {
   }
 
   addItem(type) {
-    // TODO make "newItem" here...only difference is type, so make it based on current type
-    // AND newArray?
-    
-    let spliceStart = this.state[`${type}EditIndex`]
-    if(type === 'revenue') {
-      let newArray = this.state.revenue_items;
-      let newItem = {
-        description: this.state.revenue_description,
-        oneTime: this.state.revenue_oneTime,
-        monthly: this.state.revenue_monthly
-      }
+    let newItem = {
+      description: this.state[`${type}_description`],
+      oneTime: this.state[`${type}_oneTime`],
+      monthly: this.state[`${type}_monthly`]
+    }
+    let newArray = this.state[`${type}_items`];
+    let spliceStart = this.state[`${type}EditIndex`];
 
-      if(this.state.revenueEditIndex === false) {
-        newArray.push(newItem);
-      } else {
-        newArray.splice(spliceStart, 1, newItem);
-      }
-
-      this.setState({
-        revenue_items: newArray,
-        revenue_description: '',
-        revenue_oneTime: '',
-        revenue_monthly: '',
-        revenueEditIndex: false
-      })
+    if(this.state[`${type}EditIndex`] === false) {
+      newArray.push(newItem);
     } else {
-      let newArray = this.state.expense_items;
-      let newItem = {
-        description: this.state.expense_description,
-        oneTime: this.state.expense_oneTime,
-        monthly: this.state.expense_monthly
-      }
-
-      if(this.state.expenseEditIndex === false) {
-        newArray.push(newItem);
-      } else {
-        newArray.splice(spliceStart, 1, newItem);
-      }
-        this.setState({
-        expense_items: newArray,
-        expense_description: '',
-        expense_oneTime: '',
-        expense_monthly: '',
-        expenseEditIndex: false
-      })
+      newArray.splice(spliceStart, 1, newItem);
     }
-    document.getElementById(`${type}Submit`).classList.remove("hide");
-    document.getElementById(`${type}Update`).classList.add("hide");
-    document.getElementById(`${type}Cancel`).classList.add("hide");
-
-    let highlights = document.querySelectorAll(".highlight");
-    if(highlights.length > 0) {
-      highlights.forEach( (element) => {
-        if( element.classList.value.includes(type) ) {
-          element.classList.remove("highlight")
-        }
-      })
-    }
+    this.setState({ [type + "_items"]: newArray, [type + "EditIndex"]: false })
+    this.clearInputState(type);
+    this.switchButtons(type, "normal");
+    this.clearEditHighlights(type);
   }
 
   showAlert(type) {
     let alert = document.getElementById(type).classList;
     alert.remove("hide")
-    alert.add("show");
     setTimeout( () => {
-      alert.remove("show")
       alert.add("hide")
     }, 4000);
   }
@@ -188,7 +141,6 @@ class App extends Component {
   saveData() {
     localStorage.setItem( "savedRevenueData", JSON.stringify( this.state.revenue_items ) )
     localStorage.setItem( "savedExpenseData", JSON.stringify( this.state.expense_items ) )
-
     this.showAlert('saveAlert')
   }
 
@@ -206,7 +158,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <div className="App-header">
@@ -245,7 +196,6 @@ class App extends Component {
             <div id="saveAlert" className="alert alert-success hide">Your data has been saved to your browser's localStorage.</div>
             <div id="clearAlert" className="alert alert-warning hide">Your data has been permenantly deleted.</div>
           </div>
-
           <Calculations revenue={this.state.revenue_items} expense={this.state.expense_items} />
         </div>
       </div>
