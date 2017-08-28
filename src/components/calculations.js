@@ -12,15 +12,9 @@ class Calculations extends React.Component {
   }
 
   contributionProfit(type) {
-    if(type) {
       return (
-        Numeral( this.sum(this.props.revenue, 'monthly') - this.sum(this.props.expense, 'monthly') ).format(CurrencyFormat)
+        Numeral( this.sum(this.props.revenue, type) - this.sum(this.props.expense, type) ).format(CurrencyFormat)
       )
-    } else {
-      return (
-        Numeral( this.sum(this.props.revenue) - this.sum(this.props.expense) ).format(CurrencyFormat)
-      )
-    }
   }
 
   contributionMargin() {
