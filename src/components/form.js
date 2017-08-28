@@ -6,7 +6,7 @@ class Form extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.cancelEdit = this.cancelEdit.bind(this);
+    this.handleEditCancelation = this.handleEditCancelation.bind(this);
   }
 
   handleInputChange(event) {
@@ -21,6 +21,9 @@ class Form extends React.Component {
     this.showInputError(event.target.name);
   }
 
+  handleEditCancelation(type) {
+    this.props.cancelEdit(this.props.type);
+  }
   handleSubmit(event) {
     event.preventDefault();
     let type = this.props.type;
@@ -31,10 +34,7 @@ class Form extends React.Component {
     }
   }
 
-  cancelEdit(type) {
-    this.props.cancelEdit(this.props.type);
-  }
-
+// ******** Validation  ******* //
   showFormErrors() {
     let inputs = document.querySelectorAll('input');
     let isFormValid = true;
@@ -67,8 +67,6 @@ class Form extends React.Component {
 
   render() {
     const CurrencyPattern1 = "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?"
-    // const CurrencyPattern = "^\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$"
-
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="form-inline" >
@@ -81,8 +79,8 @@ class Form extends React.Component {
                   type="text"
                   value={this.props.inputDescription}
                   onChange={this.handleInputChange}
-                  required
                   maxLength="30"
+                  required
                 />
               <div className="error" id={`${this.props.type}descriptionError`} />
             </div>
@@ -118,7 +116,7 @@ class Form extends React.Component {
             </div>
           <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
           <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
-          <button id={`${this.props.type}Cancel`} className="btn hide" onClick={this.cancelEdit}>Cancel</button>
+          <button id={`${this.props.type}Cancel`} className="btn hide" onClick={this.handleEditCancelation}>Cancel</button>
         </form>
       </div>
     )

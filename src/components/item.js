@@ -10,15 +10,15 @@ class RevenueItem extends React.Component {
       edit: false
     }
 
-    this.removeItem = this.removeItem.bind(this);
-    this.editItem = this.editItem.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
-  editItem() {
+  handleEdit() {
     let index = parseInt(this.props.index, 10);
     this.props.editItem(index, this.props.type);
 
-    let highlights = document.querySelectorAll(".highlight"); 
+    let highlights = document.querySelectorAll(".highlight");
       if(highlights.length > 0) {
         highlights.forEach( (element) => {
           if( element.classList.value.includes(this.props.type) ) {
@@ -29,7 +29,7 @@ class RevenueItem extends React.Component {
     document.querySelector(`.${this.props.type}${index}`).classList.add("highlight")
   }
 
-  removeItem(){
+  handleDelete(){
     let index = parseInt(this.props.index, 10);
     let confirmation = window.confirm("Are you sure you want to delete the item?")
     if(confirmation) this.props.removeItem(index, this.props.type);
@@ -43,11 +43,11 @@ class RevenueItem extends React.Component {
         <td>{ Numeral( item.oneTime ).format(CurrencyFormat) }</td>
         <td>{ Numeral( item.monthly ).format(CurrencyFormat) }</td>
         <td>
-          <button className="btn btn-warning item-button" onClick={this.editItem}>
+          <button className="btn btn-warning item-button" onClick={this.handleEdit}>
             <span className="glyphicon glyphicon-pencil" ></span>
           </button>
 
-          <button onClick={this.removeItem} className="btn btn-danger item-button">
+          <button onClick={this.handleDelete} className="btn btn-danger item-button">
             <span className="glyphicon glyphicon-trash" ></span>
           </button>
         </td>
