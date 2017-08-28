@@ -27,6 +27,7 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log('submit in form.js');
     event.preventDefault();
     let type = this.props.type;
     if (!this.showFormErrors()) {
@@ -36,9 +37,8 @@ class Form extends React.Component {
     }
   }
 
-  cancelEdit() {
-    console.log('cancel edit');
-
+  cancelEdit(type) {
+    this.props.cancelEdit(this.props.type);
   }
 
   showFormErrors() {
@@ -129,8 +129,9 @@ class Form extends React.Component {
           <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
 
           <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
+          <button id={`${this.props.type}Cancel`} className="btn hide" onClick={this.cancelEdit}>Cancel</button>
+
         </form>
-        <button id={`${this.props.type}Cancel`} className="btn" onClick={this.cancelEdit}>Cancel</button>
       </div>
     )
   }

@@ -39,7 +39,6 @@ class RevenueItem extends React.Component {
 
   render() {
     let item = this.props.item;
-    console.log('item',item);
     return (
       <tr className={`${this.props.type}${this.props.index}`}>
         <td>{ item.description }</td>

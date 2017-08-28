@@ -60,6 +60,7 @@ class App extends Component {
     this.editItem = this.editItem.bind(this);
     this.saveData = this.saveData.bind(this);
     this.clearData = this.clearData.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
   }
 
   componentWillMount() {
@@ -118,6 +119,7 @@ class App extends Component {
     })
     document.getElementById(`${type}Submit`).classList.add("hide");
     document.getElementById(`${type}Update`).classList.remove("hide");
+    document.getElementById(`${type}Cancel`).classList.remove("hide");
 
     // item being editted should be highlighted
 
@@ -132,12 +134,26 @@ class App extends Component {
       })
       document.getElementById(`${type}Submit`).classList.add("hide");
       document.getElementById(`${type}Update`).classList.remove("hide");
+      document.getElementById(`${type}Cancel`).classList.remove("hide");
     }
     console.log(this.state);
   }
 
+  cancelEdit(type) {
+    // let propertyName = `${type}`
+    this.setState({
+      [type+"_description"]: "",
+      [type+"_oneTime"]: 0,
+      [type+"_monthly"]: 0,
+    })
+      document.getElementById(`${type}Submit`).classList.remove("hide");
+      document.getElementById(`${type}Update`).classList.add("hide");
+      document.getElementById(`${type}Cancel`).classList.add("hide");
+
+  }
+
   addItem(type) {
-console.log(this.state);
+console.log('add item');
     // if state "edit" item is true, then handle differently...
 
     // splice instead of pushing ...or splice differently- either with the edit index or, if it's a new item, use the existing array's length to splice onto the end
@@ -237,6 +253,7 @@ console.log(this.state);
             removeItem={this.removeItem}
             addItem={this.addItem}
             editItem={this.editItem}
+            cancelEdit={this.cancelEdit}
             InputStateChange={this.InputStateChange}
             type="revenue"
             inputDescription={this.state.revenue_description}
@@ -249,6 +266,7 @@ console.log(this.state);
             removeItem={this.removeItem}
             addItem={this.addItem}
             editItem={this.editItem}
+            cancelEdit={this.cancelEdit}
             InputStateChange={this.InputStateChange}
             type="expense"
             inputDescription={this.state.expense_description}

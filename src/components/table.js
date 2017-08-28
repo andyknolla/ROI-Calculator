@@ -27,6 +27,7 @@ class Table extends React.Component {
         </table>
         <Form
           addItem={this.props.addItem}
+          cancelEdit={this.props.cancelEdit}
           type={this.props.type}
           InputStateChange={this.props.InputStateChange}
           inputDescription={this.props.inputDescription}
