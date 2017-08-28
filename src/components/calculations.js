@@ -7,7 +7,8 @@ class Calculations extends React.Component {
 
   sumTotal(items, type) {
     return items.reduce( (sum, item) => {
-        return type ? sum + item[type]: sum + item.oneTime + ( item.monthly * 12 );
+      // console.log('item ', item, 'type ', typeof(item.oneTime));
+        return type ? sum + parseFloat(item[type]): sum + parseFloat(item.oneTime) + ( parseFloat(item.monthly) * 12 );
     }, 0)
   }
 
@@ -36,8 +37,9 @@ class Calculations extends React.Component {
   roi() {
     return (
       ( this.sumTotal(this.props.expense, 'oneTime') -
-      this.sumTotal(this.props.revenue, 'oneTime') ) / this.contributionProfit('monthly')
-      )
+      this.sumTotal(this.props.revenue, 'oneTime') ) /
+      this.contributionProfit('monthly')
+    )
   }
 
   render() {

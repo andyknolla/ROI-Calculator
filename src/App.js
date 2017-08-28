@@ -15,7 +15,8 @@ class App extends Component {
       expense_description: '',
       expense_oneTime: '',
       expense_monthly: '',
-      editIndex: false
+      revenueEditIndex: false,
+      expenseEditIndex: false
     };
 
     this.InputStateChange = this.InputStateChange.bind(this);
@@ -63,7 +64,9 @@ class App extends Component {
   }
 
   editItem(itemIndex, type) {
-    this.setState({ editIndex: itemIndex })
+    this.setState({ [type + "EditIndex"]: itemIndex })
+
+    console.log('state ', this.state);
 
     if(type === 'revenue') {
     let itemForEditting = this.state.revenue_items[itemIndex]
@@ -92,9 +95,10 @@ class App extends Component {
 
   cancelEdit(type) {
     this.setState({
-      [type+"_description"]: "",
-      [type+"_oneTime"]: 0,
-      [type+"_monthly"]: 0,
+      [type + "_description"]: "",
+      [type + "_oneTime"]: 0,
+      [type + "_monthly"]: 0,
+      [type + "EditIndex"]: false
     })
     document.getElementById(`${type}Submit`).classList.remove("hide");
     document.getElementById(`${type}Update`).classList.add("hide");
@@ -111,6 +115,10 @@ class App extends Component {
   }
 
   addItem(type) {
+    // TODO make "newItem" here...only difference is type, so make it based on current type
+    // AND newArray?
+    
+    let spliceStart = this.state[`${type}EditIndex`]
     if(type === 'revenue') {
       let newArray = this.state.revenue_items;
       let newItem = {
@@ -119,10 +127,10 @@ class App extends Component {
         monthly: this.state.revenue_monthly
       }
 
-      if(this.state.editIndex === false) {
+      if(this.state.revenueEditIndex === false) {
         newArray.push(newItem);
       } else {
-        newArray.splice(this.state.editIndex, 1, newItem);
+        newArray.splice(spliceStart, 1, newItem);
       }
 
       this.setState({
@@ -130,7 +138,7 @@ class App extends Component {
         revenue_description: '',
         revenue_oneTime: '',
         revenue_monthly: '',
-        editIndex: false
+        revenueEditIndex: false
       })
     } else {
       let newArray = this.state.expense_items;
@@ -140,16 +148,17 @@ class App extends Component {
         monthly: this.state.expense_monthly
       }
 
-      if(this.state.editIndex === false) {
+      if(this.state.expenseEditIndex === false) {
         newArray.push(newItem);
       } else {
-        newArray.splice(this.state.editIndex, 1, newItem);
+        newArray.splice(spliceStart, 1, newItem);
       }
         this.setState({
         expense_items: newArray,
         expense_description: '',
         expense_oneTime: '',
-        expense_monthly: ''
+        expense_monthly: '',
+        expenseEditIndex: false
       })
     }
     document.getElementById(`${type}Submit`).classList.remove("hide");
