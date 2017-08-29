@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class Form extends React.Component {
   constructor(props) {
@@ -9,8 +9,10 @@ class Form extends React.Component {
     this.handleEditCancelation = this.handleEditCancelation.bind(this);
   }
 
+  //  ****************   EVENT HANDLERS   **************** //
+
   handleInputChange(event) {
-    event.target.classList.add('active');
+    event.target.classList.add("active");
 
     let target = event.target;
     let value = target.value;
@@ -24,28 +26,29 @@ class Form extends React.Component {
   handleEditCancelation(type) {
     this.props.cancelEdit(this.props.type);
   }
+
   handleSubmit(event) {
     event.preventDefault();
     let type = this.props.type;
-    if (!this.showFormErrors()) {
-      console.log('form is invalid: do not submit');
-    } else {
+
+    if (this.showFormErrors()) {
       this.props.addItem(type);
     }
   }
 
-// ******** Validation  ******* //
+//  ****************   VALIDATION   **************** //
+
   showFormErrors() {
-    let inputs = document.querySelectorAll('input');
+    let inputs = document.querySelectorAll("input");
     let isFormValid = true;
     inputs.forEach(input => {
-      input.classList.add('active');
+      input.classList.add("active");
       let isInputValid = this.showInputError(input.name);
 
       if (!isInputValid) {
         isFormValid = false;
       }
-      input.classList.remove('active');
+      input.classList.remove("active");
     });
     return isFormValid;
   }
@@ -55,9 +58,9 @@ class Form extends React.Component {
     const error = document.getElementById(`${this.props.type}${refName}Error`);
     if (!validity.valid) {
       if (validity.valueMissing) {
-        error.textContent = `required field`;
+        error.textContent = "required field";
       } else if (validity.patternMismatch) {
-        error.textContent = `Enter a valid currency amount`;
+        error.textContent = "Enter a valid currency amount";
       }
       return false;
     }
@@ -65,60 +68,60 @@ class Form extends React.Component {
     return true;
   }
 
+  //  ****************       VIEW       **************** //
+
   render() {
     const CurrencyPattern1 = "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?"
     return (
-      <div>
         <form onSubmit={this.handleSubmit} className="form-inline" >
-            <div className="form-group">
-              <label>description: </label>
-                <input
-                  className="form-control"
-                  name="description"
-                  ref="description"
-                  type="text"
-                  value={this.props.inputDescription}
-                  onChange={this.handleInputChange}
-                  maxLength="30"
-                  required
-                />
-              <div className="error" id={`${this.props.type}descriptionError`} />
-            </div>
-            <div className="form-group">
-              <label>One-time: </label>
-                <input
-                  className="form-control"
-                  name="oneTime"
-                  ref="oneTime"
-                  type="text"
-                  value={this.props.inputOneTime}
-                  onChange={this.handleInputChange}
-                  maxLength="13"
-                  pattern={CurrencyPattern1}
-                  required
-                 />
-              <div className="error" id={ `${this.props.type}oneTimeError` } />
-            </div>
-            <div className="form-group">
-              <label>revenue_monthly:</label>
-                <input
-                  className="form-control"
-                  name="monthly"
-                  ref="monthly"
-                  type="text"
-                  value={this.props.inputMonthly}
-                  onChange={this.handleInputChange}
-                  maxLength="13"
-                  pattern={CurrencyPattern1}
-                  required
-                 />
-             <div className="error" id={ `${this.props.type}monthlyError` } />
-            </div>
+          <div className="form-group">
+            <label>description: </label>
+              <input
+                className="form-control"
+                name="description"
+                ref="description"
+                type="text"
+                value={this.props.inputDescription}
+                onChange={this.handleInputChange}
+                maxLength="30"
+                required
+              />
+            <div className="error" id={`${this.props.type}descriptionError`}></div>
+          </div>
+          <div className="form-group">
+            <label>One-time: </label>
+              <input
+                className="form-control"
+                name="oneTime"
+                ref="oneTime"
+                type="text"
+                value={this.props.inputOneTime}
+                onChange={this.handleInputChange}
+                maxLength="13"
+                pattern={CurrencyPattern1}
+                required
+               />
+            <div className="error" id={ `${this.props.type}oneTimeError` }></div>
+          </div>
+          <div className="form-group">
+            <label>revenue_monthly:</label>
+              <input
+                className="form-control"
+                name="monthly"
+                ref="monthly"
+                type="text"
+                value={this.props.inputMonthly}
+                onChange={this.handleInputChange}
+                maxLength="13"
+                pattern={CurrencyPattern1}
+                required
+               />
+           <div className="error" id={ `${this.props.type}monthlyError` }></div>
+          </div>
           <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
           <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
-          <button id={`${this.props.type}Cancel`} className="btn hide" onClick={this.handleEditCancelation}>Cancel</button>
+          <button id={`${this.props.type}Cancel`} className="btn btn-default hide" onClick={this.handleEditCancelation}>Cancel</button>
         </form>
-      </div>
     )
   }
 }

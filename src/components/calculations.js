@@ -1,13 +1,14 @@
-import React from 'react';
-import Numeral from 'numeral';
+import React from "react";
+import Numeral from "numeral";
 
-const CurrencyFormat = '$ 0,000.00';
+const CurrencyFormat = "- $ 0,000.00";
 
 class Calculations extends React.Component {
 
   sum(items, frequency) {
     return items.reduce( (sum, item) => {
-        return frequency ? sum + parseFloat(item[frequency]): sum + parseFloat(item.oneTime) + ( parseFloat(item.monthly) * 12 );
+        return frequency ? sum + parseFloat(item[frequency]) : sum + parseFloat(item.oneTime) +
+        ( parseFloat(item.monthly) * 12 );
     }, 0)
   }
 
@@ -17,39 +18,30 @@ class Calculations extends React.Component {
 
   contributionProfit(frequency) {
       return (
-              this.sum(this.props.revenue, frequency) -
-              this.sum(this.props.expense, frequency)
+              Number( this.sum(this.props.revenue, frequency).toFixed(2) ) -
+              Number(this.sum(this.props.expense, frequency).toFixed(2) )
       )
   }
 
   contributionMargin() {
     if(this.sum(this.props.revenue) === 0) return "Unable to calculate margin (zero divisor)"
-    return Numeral( ( this.sum(this.props.revenue) -
-                    this.sum(this.props.expense) ) /
+    return Numeral( this.contributionProfit() /
                     this.sum(this.props.revenue) ).format("0%")
   }
 
   roi() {
-    // .toFixed(2));
-    //********  test  *********** //
-    // let firstPart = ( this.sum(this.props.expense, 'oneTime') -
-    //   this.sum(this.props.revenue, 'oneTime') );
-    // let secondPart = this.contributionProfit('monthly');
-    //
-    // console.log('first part ', firstPart, 'secondPart ', secondPart);
-    // console.log( firstPart / secondPart );
-    // ******** end test *********** //
-    if(this.contributionProfit('monthly') === 0) return "Unable to calculate ROI (zero divisor)";
-    return Numeral( ( this.sum(this.props.expense, 'oneTime') -
-                    this.sum(this.props.revenue, 'oneTime') ) /
-                    this.contributionProfit('monthly') )
-                    .format("0.0")
+    if(this.contributionProfit("monthly") === 0) return "Unable to calculate ROI (zero divisor)";
+    return Numeral( ( this.sum(this.props.expense, "oneTime") -
+                    this.sum(this.props.revenue, "oneTime") ) /
+                    this.contributionProfit("monthly") ).format("0.0")
   }
+
+  //  ****************       VIEW       **************** //
 
   render() {
     return (
       <div>
-        <table className='calculations table' >
+        <table className="calculations table" >
           <thead className="thead-default">
             <tr>
               <th></th>
@@ -74,7 +66,7 @@ class Calculations extends React.Component {
             <tr id="final-calculations" >
               <td>Contribution Profit</td>
               <td></td>
-              <td>{ Numeral( this.contributionProfit('monthly') ).format(CurrencyFormat) }</td>
+              <td>{ Numeral( this.contributionProfit("monthly") ).format(CurrencyFormat) }</td>
               <td>{ Numeral( this.contributionProfit() ).format(CurrencyFormat) }</td>
             </tr>
           </tbody>

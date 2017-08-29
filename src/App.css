@@ -41,10 +41,7 @@ input.active:invalid {
   margin-top: 20px;
   max-width: 750px;
 }
-.calculations td {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
+
 #final-calculations > td {
   padding-top: 20px;
 }
@@ -52,6 +49,7 @@ input.active:invalid {
 .margin-roi {
   margin-top: 20px;
   margin-bottom: 40px;
+  padding-left: 8px;
 }
 
 .margin, .roi {
@@ -70,6 +68,7 @@ input.active:invalid {
 
 .submit {
   text-transform: uppercase;
+  margin-right: 10px;
   color: white;
   background-image: linear-gradient(to top, #73b43b 0%, #99dc60 100%);
   background-repeat: repeat-x;
@@ -83,10 +82,6 @@ input.active:invalid {
 
 .form-group {
   margin-right: 5px;
-}
-
-label {
-  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {

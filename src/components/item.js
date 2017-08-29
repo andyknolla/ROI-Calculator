@@ -1,5 +1,5 @@
-import React from 'react';
-import Numeral from 'numeral';
+import React from "react";
+import Numeral from "numeral";
 
 const CurrencyFormat = "$ 0,000.00";
 
@@ -25,6 +25,8 @@ class RevenueItem extends React.Component {
     document.querySelector(`.${this.props.type}${index}`).classList.add("bg-warning")
   }
 
+  //  ****************       EVENT HANDLERS       **************** //
+
   handleEdit() {
     let index = parseInt(this.props.index, 10);
     this.props.editItem(index, this.props.type);
@@ -36,6 +38,8 @@ class RevenueItem extends React.Component {
     let confirmation = window.confirm("Are you sure you want to delete the item?")
     if(confirmation) this.props.removeItem(index, this.props.type);
   }
+
+  //  ****************       VIEW       **************** //
 
   render() {
     let item = this.props.item;

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Table from './components/table';
-import Calculations from './components/calculations'
-import './App.css';
+import React, { Component } from "react";
+import Table from "./components/table";
+import Calculations from "./components/calculations"
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -39,19 +39,26 @@ class App extends Component {
     if(savedExpenseData)  this.setState({ expense_items: savedExpenseData });
   }
 
-  removeItem(itemIndex, type) {
-    let newArray = this.state[type + "_items"];
-    newArray.splice(itemIndex, 1)  ;
-    this.setState({
-      [type + "_items"]: newArray
-    })
-  }
+// ****************       CRUD       **************** //
 
-  InputStateChange(type, value, name) {
-    let propertyName = `${type}_${name}`
-    this.setState({
-      [propertyName]: value
-    });
+  addItem(type) {
+    let newItem = {
+      description: this.state[`${type}_description`],
+      oneTime: this.state[`${type}_oneTime`],
+      monthly: this.state[`${type}_monthly`]
+    }
+    let newArray = this.state[`${type}_items`];
+    let spliceStart = this.state[`${type}EditIndex`];
+
+    if(this.state[`${type}EditIndex`] === false) {
+      newArray.push(newItem);
+    } else {
+      newArray.splice(spliceStart, 1, newItem);
+    }
+    this.setState({ [type + "_items"]: newArray, [type + "EditIndex"]: false })
+    this.clearInputState(type);
+    this.switchButtons(type, "normal");
+    this.clearEditHighlight(type);
   }
 
   editItem(itemIndex, type) {
@@ -65,6 +72,16 @@ class App extends Component {
     this.switchButtons(type, "edit");
   }
 
+  removeItem(itemIndex, type) {
+    let newArray = this.state[type + "_items"];
+    newArray.splice(itemIndex, 1)  ;
+    this.setState({
+      [type + "_items"]: newArray
+    })
+  }
+
+//  ****************      UI CHANGES      **************** //
+
   cancelEdit(type) {
     this.setState({
       [type + "_description"]: "",
@@ -74,6 +91,13 @@ class App extends Component {
     })
     this.switchButtons(type, "normal");
     this.clearEditHighlight(type);
+  }
+
+  InputStateChange(type, value, name) {
+    let propertyName = `${type}_${name}`
+    this.setState({
+      [propertyName]: value
+    });
   }
 
   clearInputState(type) {
@@ -110,26 +134,6 @@ class App extends Component {
     }
   }
 
-  addItem(type) {
-    let newItem = {
-      description: this.state[`${type}_description`],
-      oneTime: this.state[`${type}_oneTime`],
-      monthly: this.state[`${type}_monthly`]
-    }
-    let newArray = this.state[`${type}_items`];
-    let spliceStart = this.state[`${type}EditIndex`];
-
-    if(this.state[`${type}EditIndex`] === false) {
-      newArray.push(newItem);
-    } else {
-      newArray.splice(spliceStart, 1, newItem);
-    }
-    this.setState({ [type + "_items"]: newArray, [type + "EditIndex"]: false })
-    this.clearInputState(type);
-    this.switchButtons(type, "normal");
-    this.clearEditHighlight(type);
-  }
-
   showAlert(type) {
     let alert = document.getElementById(type).classList;
     alert.remove("hide")
@@ -138,17 +142,19 @@ class App extends Component {
     }, 4000);
   }
 
+//  ****************   LOCAL STORAGE   **************** //
+
   saveData() {
     localStorage.setItem( "savedRevenueData", JSON.stringify( this.state.revenue_items ) )
     localStorage.setItem( "savedExpenseData", JSON.stringify( this.state.expense_items ) )
-    this.showAlert('saveAlert')
+    this.showAlert("saveAlert")
   }
 
   clearData() {
     let confirmation = window.confirm("Are you sure you want to permenantly delete all of your data?")
     if(confirmation) {
-      localStorage.removeItem('savedExpenseData');
-      localStorage.removeItem('savedRevenueData');
+      localStorage.removeItem("savedExpenseData");
+      localStorage.removeItem("savedRevenueData");
       this.setState({
         revenue_items: [],
         expense_items: []
@@ -157,14 +163,16 @@ class App extends Component {
     }
   }
 
+  //  ****************       VIEW       **************** //
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
           <h2>ROI Calculator</h2>
-          <p className="App-intro">Enter values below. Click SAVE to store your data to the browser's localStorage</p>
+          <p className="App-intro">Enter values below. Click SAVE to store your data to the browser"s localStorage</p>
         </div>
-        <div className='container'>
+        <div className="container">
           <Table
             items={this.state.revenue_items}
             removeItem={this.removeItem}
