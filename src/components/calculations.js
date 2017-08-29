@@ -22,16 +22,15 @@ class Calculations extends React.Component {
       )
   }
 
-// TODO move Numeral formatting into these two methods
-// TODO clean up indentation
-
   contributionMargin() {
+    if(this.sum(this.props.revenue) === 0) return "Unable to calculate margin (zero divisor)"
     return Numeral( ( this.sum(this.props.revenue) -
                     this.sum(this.props.expense) ) /
                     this.sum(this.props.revenue) ).format("0%")
   }
 
   roi() {
+    // .toFixed(2));
     //********  test  *********** //
     // let firstPart = ( this.sum(this.props.expense, 'oneTime') -
     //   this.sum(this.props.revenue, 'oneTime') );
@@ -40,26 +39,26 @@ class Calculations extends React.Component {
     // console.log('first part ', firstPart, 'secondPart ', secondPart);
     // console.log( firstPart / secondPart );
     // ******** end test *********** //
-
+    if(this.contributionProfit('monthly') === 0) return "Unable to calculate ROI (zero divisor)";
     return Numeral( ( this.sum(this.props.expense, 'oneTime') -
                     this.sum(this.props.revenue, 'oneTime') ) /
-                    0)
-                    // this.contributionProfit('monthly') )
+                    this.contributionProfit('monthly') )
                     .format("0.0")
-
   }
 
   render() {
     return (
       <div>
-        <table className='calculations' >
-          <tbody>
-            <tr className="col-titles">
+        <table className='calculations table' >
+          <thead className="thead-default">
+            <tr>
               <th></th>
               <th>One-Time</th>
               <th>Monthly</th>
               <th>Total</th>
             </tr>
+          </thead>
+          <tbody>
             <tr className="total-calculations" >
               <td>Revenue</td>
               <td>{ this.total("revenue", "oneTime") }</td>

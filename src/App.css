@@ -32,14 +32,6 @@ input.active:invalid {
   margin-bottom: 10px;
 }
 
-.col-titles {
-  font-size: 1.6rem;
-}
-
-.highlight {
-  border: 1px solid orange;
-}
-
 .item-button {
   padding: 1px 10px;
   margin: 3px;
@@ -48,10 +40,6 @@ input.active:invalid {
 .calculations {
   margin-top: 20px;
   max-width: 750px;
-}
-.calculations tr {
-  border-bottom: 1px solid lightgray;
-  padding: 5px;
 }
 .calculations td {
   padding-top: 5px;
@@ -63,15 +51,13 @@ input.active:invalid {
 
 .margin-roi {
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .margin, .roi {
   max-width: 50%;
   display: flex;
   justify-content: space-between;
-}
-
-.margin-value {
 }
 
 .buttons {
@@ -121,10 +107,7 @@ label {
   display: none;
   transition: display 1s;
 }
-.show {
-  display: block;
-  transition: display 1s;
-}
+
 .alert {
   margin-top: 20px;
 }

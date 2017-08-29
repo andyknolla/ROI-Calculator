@@ -162,7 +162,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>ROI Calculator</h2>
-          <p className="App-intro">Enter values below. Click save to save your data to the browser's localStorage</p>
+          <p className="App-intro">Enter values below. Click SAVE to store your data to the browser's localStorage</p>
         </div>
         <div className='container'>
           <Table
@@ -177,7 +177,6 @@ class App extends Component {
             inputOneTime={this.state.revenue_oneTime}
             inputMonthly={this.state.revenue_monthly}
           />
-
           <Table
             items={this.state.expense_items}
             removeItem={this.removeItem}
