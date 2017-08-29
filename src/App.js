@@ -173,6 +173,7 @@ class App extends Component {
           <p className="App-intro">Enter values below. Click SAVE to store your data to the browser"s localStorage</p>
         </div>
         <div className="container">
+          <h3>Revenue Items</h3>
           <Table
             items={this.state.revenue_items}
             removeItem={this.removeItem}
@@ -185,6 +186,7 @@ class App extends Component {
             inputOneTime={this.state.revenue_oneTime}
             inputMonthly={this.state.revenue_monthly}
           />
+          <h3>Expense Items</h3>
           <Table
             items={this.state.expense_items}
             removeItem={this.removeItem}
