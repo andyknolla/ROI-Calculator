@@ -14,12 +14,13 @@ class Table extends React.Component {
   render() {
     return (
       <div className="input-group">
-        <table className="dataTable" >
+        <table className="table table-sm dataTable" >
           <tbody>
             <tr className="col-titles">
               <th>Item Description</th>
               <th>One-Time</th>
               <th>Monthly</th>
+              <th>Edit / Delete</th>
               {/* <th>Require confirmation<input type="checkbox" /></th> */}
             </tr>
             {this.renderItems(this.props.items)}

@@ -57,7 +57,7 @@ class Form extends React.Component {
       if (validity.valueMissing) {
         error.textContent = `required field`;
       } else if (validity.patternMismatch) {
-        error.textContent = `Wrong`;
+        error.textContent = `Enter a valid currency amount`;
       }
       return false;
     }

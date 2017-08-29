@@ -73,7 +73,7 @@ class App extends Component {
       [type + "EditIndex"]: false
     })
     this.switchButtons(type, "normal");
-    this.clearEditHighlights(type);
+    this.clearEditHighlight(type);
   }
 
   clearInputState(type) {
@@ -99,12 +99,12 @@ class App extends Component {
     }
   }
 
-  clearEditHighlights(type) {
-    let highlights = document.querySelectorAll(".highlight");
+  clearEditHighlight(type) {
+    let highlights = document.querySelectorAll(".bg-warning");
     if(highlights.length > 0) {
       highlights.forEach( (element) => {
         if( element.classList.value.includes(type) ) {
-          element.classList.remove("highlight")
+          element.classList.remove("bg-warning")
         }
       })
     }
@@ -127,7 +127,7 @@ class App extends Component {
     this.setState({ [type + "_items"]: newArray, [type + "EditIndex"]: false })
     this.clearInputState(type);
     this.switchButtons(type, "normal");
-    this.clearEditHighlights(type);
+    this.clearEditHighlight(type);
   }
 
   showAlert(type) {
@@ -162,8 +162,8 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>ROI Calculator</h2>
+          <p className="App-intro">Enter values below. Click save to save your data to the browser's localStorage</p>
         </div>
-        <p className="App-intro">         </p>
         <div className='container'>
           <Table
             items={this.state.revenue_items}

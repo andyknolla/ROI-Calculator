@@ -9,24 +9,26 @@ class RevenueItem extends React.Component {
     this.state = {
       edit: false
     }
-
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  highlightEditItem(index) {
+    let highlights = document.querySelectorAll(".bg-warning");
+      if(highlights.length > 0) {
+        highlights.forEach( (element) => {
+          if( element.classList.value.includes(this.props.type) ) {
+            element.classList.remove("bg-warning")
+          }
+        })
+    }
+    document.querySelector(`.${this.props.type}${index}`).classList.add("bg-warning")
   }
 
   handleEdit() {
     let index = parseInt(this.props.index, 10);
     this.props.editItem(index, this.props.type);
-
-    let highlights = document.querySelectorAll(".highlight");
-      if(highlights.length > 0) {
-        highlights.forEach( (element) => {
-          if( element.classList.value.includes(this.props.type) ) {
-            element.classList.remove("highlight")
-          }
-        })
-    }
-    document.querySelector(`.${this.props.type}${index}`).classList.add("highlight")
+    this.highlightEditItem(index);
   }
 
   handleDelete(){

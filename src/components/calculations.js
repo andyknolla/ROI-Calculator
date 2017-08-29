@@ -43,8 +43,10 @@ class Calculations extends React.Component {
 
     return Numeral( ( this.sum(this.props.expense, 'oneTime') -
                     this.sum(this.props.revenue, 'oneTime') ) /
-                    this.contributionProfit('monthly') ).format("0.0")
-                    
+                    0)
+                    // this.contributionProfit('monthly') )
+                    .format("0.0")
+
   }
 
   render() {
