@@ -69,6 +69,7 @@ class App extends Component {
       [type + "_monthly"]: itemForEditting.monthly,
       [type + "EditIndex"]: itemIndex
     })
+    this.clearInputErrors();
     this.switchButtons(type, "edit");
   }
 
@@ -85,12 +86,25 @@ class App extends Component {
   cancelEdit(type) {
     this.setState({
       [type + "_description"]: "",
-      [type + "_oneTime"]: 0,
-      [type + "_monthly"]: 0,
+      [type + "_oneTime"]: '',
+      [type + "_monthly"]: '',
       [type + "EditIndex"]: false
     })
+
     this.switchButtons(type, "normal");
     this.clearEditHighlight(type);
+  }
+
+  clearInputErrors() {
+    let inputs = document.querySelectorAll("input");
+    let errors = document.querySelectorAll(".error");
+
+    errors.forEach(error => {
+      error.textContent = '';
+    })
+    inputs.forEach(input => {
+      input.classList.remove("active");
+    });
   }
 
   InputStateChange(type, value, name) {

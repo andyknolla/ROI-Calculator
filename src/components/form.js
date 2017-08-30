@@ -25,7 +25,21 @@ class Form extends React.Component {
 
   handleEditCancelation(type) {
     this.props.cancelEdit(this.props.type);
+    this.clearInputErrors();
   }
+
+  clearInputErrors() {
+    let inputs = document.querySelectorAll("input");
+    let errors = document.querySelectorAll(".error");
+
+    errors.forEach(error => {
+      error.textContent = '';
+    })
+    inputs.forEach(input => {
+      input.classList.remove("active");
+    });
+  }
+
 
   handleSubmit(event) {
     event.preventDefault();
@@ -86,7 +100,7 @@ class Form extends React.Component {
                 maxLength="30"
                 required
               />
-            <div className="error" id={`${this.props.type}descriptionError`}></div>
+            <div className="error" id={ `${this.props.type}descriptionError` }></div>
           </div>
           <div className="form-group">
             <label>One-time: </label>
@@ -120,7 +134,7 @@ class Form extends React.Component {
           </div>
           <button id={`${this.props.type}Submit`} className="btn submit" >{`Add ${this.props.type} item`}</button>
           <button id={`${this.props.type}Update`} className="btn submit hide" >Update item</button>
-          <button id={`${this.props.type}Cancel`} className="btn btn-default hide" onClick={this.handleEditCancelation}>Cancel</button>
+          <button type="button" id={`${this.props.type}Cancel`} className="btn btn-default hide" onClick={this.handleEditCancelation}>Cancel</button>
         </form>
     )
   }
